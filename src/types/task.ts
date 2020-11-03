@@ -1,8 +1,4 @@
-export type TaskProps = {
-  name: string,
+export type Task = {
+  title: string,
   description: string,
-}
-
-export type TaskListProps = {
-  tasks: TaskProps[],
 }

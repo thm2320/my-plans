@@ -1,14 +1,18 @@
 import React from 'react';
-import { TaskListProps, TaskProps } from '../../types/task';
-import { Task } from './Task/Task';
+import { Task } from '../../types/task';
+import { TaskItem } from './TaskItem/TaskItem';
 import './TaskList.scss';
 
-export const TaskList = (props: TaskListProps) => {
+type Props = {
+  tasks: Task[],
+}
+
+export const TaskList = (props: Props) => {
   return (
     <div className="TaskList">
       {
-        props.tasks.map((taskData: TaskProps) => (
-          <Task
+        props.tasks.map((taskData: Task) => (
+          <TaskItem
             {...taskData}
           />
         ))
