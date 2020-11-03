@@ -1,10 +1,6 @@
 import React from 'react';
+import { TaskProps } from '../../../types/task';
 import './Task.scss';
-
-export type TaskProps = {
-  name: string,
-  description: string,
-}
 
 export const Task = (props: TaskProps) => {
 

@@ -1,30 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Task, TaskProps } from './Task/Task';
-
+import React from 'react';
+import { TaskListProps, TaskProps } from '../../types/task';
+import { Task } from './Task/Task';
 import './TaskList.scss';
 
-
-
-export const TaskList = () => {
-  const [taskList, setTaskList] = useState<TaskProps[]>([])
-
-  useEffect(() => {
-    setTaskList([
-      {
-        name: 'Task A',
-        description: 'Description for A! '
-      },
-      {
-        name: 'Task B',
-        description: 'Description for B! '
-      }
-    ])
-  }, [])
-
+export const TaskList = (props: TaskListProps) => {
   return (
     <div className="TaskList">
       {
-        taskList.map((taskData: TaskProps) => (
+        props.tasks.map((taskData: TaskProps) => (
           <Task
             {...taskData}
           />
