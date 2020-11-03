@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.scss';
-import { TaskList } from './components/TaskList/TaskList';
+import { Layout } from './components/Layout/Layout';
 
 function App() {
   return (
     <div className="App">
-      <TaskList />
+      <Layout />
     </div>
   );
 }
