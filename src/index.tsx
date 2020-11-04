@@ -4,6 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
+
+axios.get('/healthCheck')
+  .then(res => {
+    console.log(res);
+  })
+  .catch(err => {
+    console.log(err);
+    console.log('No response from backend');
+  })
 
 ReactDOM.render(
   <React.StrictMode>
