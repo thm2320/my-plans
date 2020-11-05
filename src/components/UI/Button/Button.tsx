@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import './Button.scss';
 
 type Props = {
-  btnClickHandler: () => void,
+  btnClickHandler: (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
   children: ReactNode
 }
 

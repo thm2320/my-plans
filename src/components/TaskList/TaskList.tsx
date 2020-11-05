@@ -13,6 +13,7 @@ export const TaskList = (props: Props) => {
       {
         props.tasks.map((taskData: Task) => (
           <TaskItem
+            key={taskData._id}
             {...taskData}
           />
         ))
