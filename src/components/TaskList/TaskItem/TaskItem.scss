@@ -1,9 +1,13 @@
-.Task{
+.Task {
   text-align: left;
   width: 10em;
-  margin:1em;
+  margin: 1em;
   padding-left: 1em;
   border-left: 5px solid blue;
   background-color: #c1f0f0;
-  
+  box-shadow: 3px 3px 3px gray;
+
+  &:hover {
+    opacity: 0.6;
+  }
 }
