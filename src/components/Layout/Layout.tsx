@@ -8,7 +8,7 @@ export const Layout = () => {
     <div>
       <Switch>
 
-        <Route path="/task" render={() => <TaskForm />} />
+        <Route path="/task/:id?" render={() => <TaskForm />} />
         <Route exact path="/" render={() => <TasksContainer />} />
 
       </Switch>

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { Task } from '../../types/task';
 import { Button } from '../../components/UI/Button/Button';
 import './TaskForm.scss';
@@ -10,8 +10,14 @@ type FormFields = {
   description: string,
 }
 
+type PathParams = {
+  id: string,
+}
+
 export const TaskForm = () => {
 
+  const { id } = useParams<PathParams>();
+  const isUpdating = !!id;
   const [fields, setFields] = useState<FormFields>({
     title: '',
     description: '',
@@ -19,14 +25,36 @@ export const TaskForm = () => {
 
   const history = useHistory();
 
-  const addBtnClickHandler = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  useEffect(() => {
+    if (id) {
+      axios.get(`/tasks/get-task/${id}`)
+        .then(res => {
+
+          if (res.data.success) {
+            const taskData = res.data.data
+            setFields({
+              ...taskData
+            })
+          }
+        });
+    }
+
+  }, [])
+
+  const btnClickHandler = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     evt.preventDefault();
     const { title, description } = fields;
-    const newTask: Task = {
+    const taskData: Task = {
       title: title,
       description: description,
     }
-    const res = await axios.post('/tasks/add-task', newTask)
+    let url = '/tasks/add-task';
+    if (isUpdating) {
+      url = `/tasks/update-task`;
+      taskData._id = id;
+    }
+
+    const res = await axios.post(url, taskData);
     if (res) {
       history.push('/');
     }
@@ -40,6 +68,7 @@ export const TaskForm = () => {
     }
     setFields(updatedFields);
   }
+
 
   return (
     <form className="TaskForm">
@@ -58,7 +87,8 @@ export const TaskForm = () => {
         value={fields.description}
         onChange={onInputChange}
       />
-      <Button btnClickHandler={addBtnClickHandler}>Add New Task</Button>
+      <Button btnClickHandler={btnClickHandler}>{isUpdating ? "Update Task" : "Add New Task"}</Button>
+
     </form>
   );
 }
