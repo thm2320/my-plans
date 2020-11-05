@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
-import { TasksDisplayer } from '../../components/TasksDisplayer/TasksDisplayer';
-import { TaskForm } from '../../components/TaskForm/TaskForm';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
+import { TaskList } from '../../components/TaskList/TaskList';
+import { Button } from '../../components/UI/Button/Button';
 import { Task } from '../../types/task';
 
 export const TasksContainer = () => {
+
   const [tasks, setTasks] = useState<Task[]>([])
 
   useEffect(() => {
-    setTasks([
-      {
-        title: 'Task A',
-        description: 'Description for A! '
-      },
-      {
-        title: 'Task B',
-        description: 'Description for B! '
-      }
-    ])
+
+    axios.get('/tasks')
+      .then((res) => {
+        if (res.data.success) {
+          setTasks(res.data.data)
+        }
+      })
   }, [])
 
-  const addNewTask = (newTask: Task) => {
-    setTasks([...tasks, newTask]);
+  let history = useHistory();
+
+  const goToNewTaskPage = () => {
+    history.push('/task')
   }
 
   return (
     <div>
-      <Route exact path="/">
-        <TasksDisplayer tasks={tasks} />
-      </Route>
-      <Route path="/task">
-        <TaskForm addNewTaskHandler={addNewTask} />
-      </Route>
+      <TaskList tasks={tasks} />
+      <Button btnClickHandler={goToNewTaskPage}>New Task</Button>
     </div>
   );
 }

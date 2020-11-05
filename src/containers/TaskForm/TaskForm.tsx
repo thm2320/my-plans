@@ -1,19 +1,17 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Task } from '../../types/task';
-import { Button } from '../UI/Button/Button';
+import { Button } from '../../components/UI/Button/Button';
 import './TaskForm.scss';
-
-type Props = {
-  addNewTaskHandler: (task: Task) => void,
-}
 
 type FormFields = {
   title: string,
   description: string,
 }
 
-export const TaskForm = (props: Props) => {
+export const TaskForm = () => {
+
   const [fields, setFields] = useState<FormFields>({
     title: '',
     description: '',
@@ -21,16 +19,17 @@ export const TaskForm = (props: Props) => {
 
   const history = useHistory();
 
-  const addBtnClickHandler = () => {
+  const addBtnClickHandler = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    evt.preventDefault();
     const { title, description } = fields;
-
     const newTask: Task = {
       title: title,
       description: description,
     }
-
-    props.addNewTaskHandler(newTask);
-    history.push('/');
+    const res = await axios.post('/tasks/add-task', newTask)
+    if (res) {
+      history.push('/');
+    }
   }
 
   const onInputChange = (evt: any) => {
