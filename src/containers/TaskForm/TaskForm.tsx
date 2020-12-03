@@ -39,7 +39,7 @@ export const TaskForm = () => {
         });
     }
 
-  }, [])
+  }, [id])
 
   const btnClickHandler = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     evt.preventDefault();
